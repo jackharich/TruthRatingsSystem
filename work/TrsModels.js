@@ -1,7 +1,7 @@
 /* Contents:
     class TrsModels - Manages the database tables, aka models.
     class TrsModel  - The superclass for other models.
-    class TrsModelUsers - Subclass for users table.xx
+    class TrsModelUsers - Subclass for users table.
     Note - I was unable to put subclasses in separate files. Couldn't get export/require to work.
 */
 class TrsModels {
