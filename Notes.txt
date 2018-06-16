@@ -1,0 +1,43 @@
+Bug: 
+
+First get publish git branch working. Figure out how to add remote repository.
+
+Deployment: Try Azure. Setup account, install Azure App Service, do tutorial at:
+https://code.visualstudio.com/tutorials/app-service-extension/getting-started
+
+xxxxxx
+
+
+Now we have a basic client/server framework with CRUD and user logon with token and server stores hashed passwords.
+Next:
+    - Put framwork into git, learn how to use it.
+    - Using framework, setup deployment, with dev, staging, and production. Test.
+    - Announce on node meetup that I have a node/express/sequelize framework w tokens, hashed pwds.
+
+One step at a time add framwork to prototype and refactor prototype:
+    - Put the entire prototype into the public folder. It replaces index.html. Make that index2.html.
+    - Get logon working. This is the first big step. The rest will be easy but take time.
+    - Admin page, add three sections for countries, orgs, users.
+    - Get countries working.
+    - Get orgs working.
+    - Get users working, with lots of validation.
+    - Refactor how three TrsDatabase tables are done into dataModel and viewModel.
+    - Put these three tables into the database.
+    - Redo the local storage articles table, put into database.
+    - Now all data is in the database and we have an online multi-user system!
+
+----- Setup node this way:
+> npm init -y   Uses all default in the package.json. Then edit it.
+> npm install nodemon --save-dev
+> npm install express --save
+> npm install body-parser --save
+> npm install sequelize --save
+> npm install mysql2 --save
+    "main": "./work/server.js",
+    "scripts": {
+        "start": "node ./work/server.js",
+        "dev":   "nodemon ./work/server.js"
+    },
+For server auth class:
+> npm install jsonwebtoken --save
+> npm install bcryptjs --save
