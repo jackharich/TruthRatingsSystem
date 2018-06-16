@@ -1,5 +1,5 @@
 Bug: 
-
+TEST UPDATE
 First get publish git branch working. Figure out how to add remote repository.
 
 Deployment: Try Azure. Setup account, install Azure App Service, do tutorial at:
