@@ -1,11 +1,14 @@
 Bug: 
-TEST UPDATE
-First get publish git branch working. Figure out how to add remote repository.
+
+Done. First get publish git branch working. Figure out how to add remote repository.
+Still forced to enter username and pwd for every publish. Next step is Azure.
 
 Deployment: Try Azure. Setup account, install Azure App Service, do tutorial at:
 https://code.visualstudio.com/tutorials/app-service-extension/getting-started
 
-
+Next: Very troublesome, tedious, buggy Azure and all the rest.
+Use different database configurations for production and dev. What about staging? Is this possible?
+Take plenty of time to get this step right. 
 
 
 Now we have a basic client/server framework with CRUD and user logon with token and server stores hashed passwords.
