@@ -22,11 +22,12 @@ class TrsServer {
         this.express.use(this.bodyParser.urlencoded({ extended: true }));
         this.express.use(this.bodyParser.json()); // To receive and parse json data. NOT USED.
         this.initDatabase();
-        this.trsModels     = new this.TrsModels(this.Sequelize, this.sequelize);
-        this.trsServerAuth = new this.TrsServerAuth(this.trsModels);
+        
+        // this.trsModels     = new this.TrsModels(this.Sequelize, this.sequelize);
+        // this.trsServerAuth = new this.TrsServerAuth(this.trsModels);
 
-        // Run test. This drops and populates the users table. Disable for produiction. =====
-        this.trsModels.runUnitTest(this.trsServerAuth);
+        // // Run test. This drops and populates the users table. Disable for produiction. =====
+        // this.trsModels.runUnitTest(this.trsServerAuth);
 
         // ----- Setup routes -----
         this.express.get('/getData', (request, response) => { 
