@@ -94,7 +94,9 @@ class TrsServer {
         });
         // ----- Listen for requests from client -----
         const PORT = 3000;
-        this.express.listen(PORT, () => console.log(`Server ready at http://localhost:${PORT}`) );
+        this.express.listen(PORT, () => {
+            console.log(`Server ready at http://localhost:${PORT}`);
+        });
     }
     invalidAuthorization(response, errorMessage) {
         let result      = {};
@@ -237,11 +239,17 @@ class TrsServer {
         return error.name + ': ' + error.errors[0].message;
     }
     initDatabase() {
+        // Config variables.
+        let databaseName     = process.env.DATABASE_NAME      || 'trs';
+        let databaseUserName = process.env.DATABASE_USER_NAME || 'root';
+        let databasePassword = process.env.DATABASE_PASSWORD  || '1234';
+        let databaseHost     = process.env.DATABASE_HOST      || 'localhost';
+
         // Open connection to the db.
-        this.sequelize = new this.Sequelize('trs', 'root', '1234', {
-            host: 'localhost',
+        this.sequelize = new this.Sequelize(databaseName, databaseUserName, databasePassword, {
+            host: databaseHost,
             dialect: 'mysql',
-            operatorsAliases: false,
+            operatorsAliases: false, 
             logging: false,
             //insecureAuth: true, // No longer needed.
             pool: {

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./work/TrsServer.js",
-    "start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT index.js",
+    "start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT ./work/TrsServer.js",
     "dev": "nodemon ./work/TrsServer.js"
   },
   "keywords": [],
