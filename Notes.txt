@@ -32,12 +32,7 @@ One step at a time add framwork to prototype and refactor prototype:
     - Redo the local storage articles table, put into database.
     - Now all data is in the database and we have an online multi-user system!
 
-User accounts:
-    - admin, thriftyH87
-    - martha_annie@thwink.org, truthfulNow34
-    - jack@thwink.org, jackoSustain56
-    - scott@thwink.org, scottieCandle98
-    - montserrat@thwink.org, research7865
+
 
 ----- Setup node this way:
 > npm init -y   Uses all default in the package.json. Then edit it.
