@@ -18,11 +18,28 @@ class TrsServer {
         this.TrsServerAuth  = require('./TrsServerAuth');
         this.trsServerAuth;
     }
+    xxxinit() {
+        const http = require('http');
+        let hostname = '127.0.0.1';
+        const port = 3000;
+
+        hostname = 'https://truth-rating-system.azurewebsites.net';
+
+        const server = http.createServer((req, res) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'text/plain');
+            res.end('Hello World\n');
+        });
+        server.listen(port, hostname, () => { // Error =================
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+    }
     init() {
         this.express.use(this.bodyParser.urlencoded({ extended: true }));
         this.express.use(this.bodyParser.json()); // To receive and parse json data. NOT USED.
-        this.initDatabase();
-        
+
+        // this.initDatabase();
+
         // this.trsModels     = new this.TrsModels(this.Sequelize, this.sequelize);
         // this.trsServerAuth = new this.TrsServerAuth(this.trsModels);
 
@@ -94,7 +111,7 @@ class TrsServer {
             console.log('Error: ' + error.message); // Later call method. =====
         });
         // ----- Listen for requests from client -----
-        const PORT = 3000;
+        const PORT = process.env.PORT || 3000;
         this.express.listen(PORT, () => {
             console.log(`Server ready at http://localhost:${PORT}`);
         });

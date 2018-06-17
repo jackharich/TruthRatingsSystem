@@ -1,4 +1,5 @@
 Bug: 
+"start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT ./work/TrsServer.js",
 
 Done. First get publish git branch working. Figure out how to add remote repository.
 Still forced to enter username and pwd for every publish. Next step is Azure.
@@ -9,6 +10,8 @@ https://code.visualstudio.com/tutorials/app-service-extension/getting-started
 Next: Very troublesome, tedious, buggy Azure and all the rest.
 Use different database configurations for production and dev. What about staging? Is this possible?
 Take plenty of time to get this step right. 
+
+
 
 
 Now we have a basic client/server framework with CRUD and user logon with token and server stores hashed passwords.
@@ -28,6 +31,13 @@ One step at a time add framwork to prototype and refactor prototype:
     - Put these three tables into the database.
     - Redo the local storage articles table, put into database.
     - Now all data is in the database and we have an online multi-user system!
+
+User accounts:
+    - admin, thriftyH87
+    - martha_annie@thwink.org, truthfulNow34
+    - jack@thwink.org, jackoSustain56
+    - scott@thwink.org, scottieCandle98
+    - montserrat@thwink.org, research7865
 
 ----- Setup node this way:
 > npm init -y   Uses all default in the package.json. Then edit it.

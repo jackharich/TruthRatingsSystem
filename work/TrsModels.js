@@ -24,9 +24,16 @@ class TrsModels {
             return undefined;
         }
     }
+    logHashedPassword(trsServerAuth, password) {
+        console.log('Hash for ' + password + ' = ' + trsServerAuth.createHashedPassword(password));
+    }
     runUnitTest(trsServerAuth) {
         // Create hashed pwd. 
-        // console.log('Hash for democratic = ' + trsServerAuth.createHashedPassword('democratic'));
+        // this.logHashedPassword(trsServerAuth, 'thriftyH87');
+        // this.logHashedPassword(trsServerAuth, 'truthfulNow34');
+        // this.logHashedPassword(trsServerAuth, 'jackoSustain56');
+        // this.logHashedPassword(trsServerAuth, 'scottieCandle98');
+        // this.logHashedPassword(trsServerAuth, 'research7865');
 
         let usersTable = this.getModel(TrsModels.USERS_TABLE).table;
 
@@ -35,8 +42,7 @@ class TrsModels {
             // Table created. Add users. Promise chain used to get admin id same every time.
             usersTable.create({
                 fullName: 'Administrator',
-                //password: 'admin',
-                password: '$2a$10$hV4q2.trW8n0TPn9KDhBI.AFrLWLPXZ.Pi1zljDTjTdJE/tEdGho2',
+                password: '$2a$10$3HMUycVQi3fqHyAxg3k8JuPJLiRYXXtqPdnTV7hFD6CbWmQXelEyO',
                 emailAddress: 'admin', // Let's see if this is a problem. It's not valid.
                 orgId: 1,
                 isOrgAdmin: true,
@@ -44,8 +50,7 @@ class TrsModels {
             }).then( ()=> { 
                 usersTable.create({
                     fullName: 'Martha Harich',
-                    // password: 'democratic',
-                    password: '$2a$10$FZg1A3RF0ReuIRD.lCkl.OYfgaWoyzQ19HnQRlHrbjUM/gX7pNYfO',
+                    password: '$2a$10$UTOt50QfHnROg4eX/aaOUeO0gZq8df2ndWRstWfE2jw3avJb5CEPe',
                     emailAddress: 'martha_annie@thwink.org',
                     orgId: 2,
                 });                
@@ -53,7 +58,7 @@ class TrsModels {
                 usersTable.create({
                     fullName: 'Jack Harich',
                     // password: 'sustainablenow',
-                    password: '$2a$10$V1Jl9dEc9J6vN/uikXA4.uCrMq7YEfR9FOT.pvntaWFBg0tqk2SLu',
+                    password: '$2a$10$6Dd5Xqq2TNeSOgMqrEYHd.3BcAMrM39iDHp77Brn9xeLrF3F8ngCq',
                     emailAddress: 'jack@thwink.org',
                     orgId: 1,
                     isOrgAdmin: true,
@@ -62,8 +67,7 @@ class TrsModels {
             }).then( ()=> { 
                 usersTable.create({  
                     fullName: 'Scott Booher',
-                    // password: 'candlevision',
-                    password: '$2a$10$/IsfWJYjPRApC9BnDKkgm.GF2hWrnW1AiiBlX.nBoG1Wz9Oru.Mha',
+                    password: '$2a$10$181BsWW4lZN4j8H61wuzL.TRyaReFP6Le1qWjL5fO.1BuRhooMnsS',
                     emailAddress: 'scott@thwink.org',
                     orgId: 2,
                     isOrgAdmin: true,
@@ -79,10 +83,10 @@ class TrsModels {
         // Test addRecord().
         let record = {};
         record.fullName = 'Montserrat Kollofon';
-        // record.password = 'researchsuccess',
-        record.password = '$2a$10$cQeQrVCt2JxtjLYqU8nteutBcmqCaBEuC3Gq2X7od/QcA/LnB.5Sq',
+        record.password = '$2a$10$fJhT6i1xOSvpDSr3of/S0OiIQEdRf4r0HRb.zrUrgM1gb9a.xmvSC';
         record.emailAddress = 'montserrat@thwink.org';
         record.orgId = 1;
+        record.isOrgAdmin = true;
 
         usersModel.addRecord(record).then(newId => {
             //console.log('2---> addRecord newId = ' + newId);
@@ -201,10 +205,12 @@ class TrsModelUsers extends TrsModel {
         //console.log('users addRecord entered');
         let id;
         await this.table.create({  
-            fullName: record.fullName,
-            password: record.password,
-            emailAddress: record.emailAddress,
-            orgId: record.orgId
+            fullName:      record.fullName,
+            password:      record.password,
+            emailAddress:  record.emailAddress,
+            isOrgAdmin:    record.isOrgAdmin,
+            isSystemAdmin: record.isSystemAdmin,
+            orgId:         record.orgId
         // Get the new id via a promise. 
         }).then(record => {		
             id = record.id;

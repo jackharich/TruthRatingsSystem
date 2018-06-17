@@ -10,20 +10,21 @@ class TrsServerAuth {
         this.models = models;
         this.jwt    = require('jsonwebtoken');
         this.bcrypt = require('bcryptjs');
-        this.secret = 'msdafkjvxzc768!@$%GFDgdf87adfsgmn54r23q87u'; // Random keyboard typing.
+        this.tokenSecret = 'msdafkjvxzc768!@$%GFDgdf87adfsgmn54r23q87u'; // Random keyboard typing.
+        this.passwordSecret = 'ijo^&654^$(&6xw808gRf765%$365675jhbvjhs'; // Random keyboard typing.
     }
     // ----- Password methods ----- 
     isCorrectPassword(password, hashedPassword) {
-        return this.bcrypt.compareSync(password, hashedPassword);
+        return this.bcrypt.compareSync(password + this.passwordSecret, hashedPassword);
     }
     createHashedPassword(password) {
-        return this.bcrypt.hashSync(password, 10);
+        return this.bcrypt.hashSync(password + this.passwordSecret, 10);
     }
     // ----- Token methods -----
     // The client receives the token, puts it in local storage.
     createToken(userId) {
         // Expires in 10 days.
-        return this.jwt.sign({ id: userId }, this.secret, {expiresIn: "10d" });
+        return this.jwt.sign({ id: userId }, this.tokenSecret, {expiresIn: "10d" });
     }
     // Each logged in client request has x-access-token in header. For sensitive calls, use:
     // Validates token, puts results in request.app.
@@ -46,7 +47,7 @@ class TrsServerAuth {
         }
         let decodedToken;
         try {
-            decodedToken = this.jwt.decode(token, this.secret);
+            decodedToken = this.jwt.decode(token, this.tokenSecret);
         } catch(error) {
             request.app.isError = true;
             request.app.error   = 'Error in isValidToken. Cannot decode token.';
