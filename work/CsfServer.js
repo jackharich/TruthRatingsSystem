@@ -22,13 +22,13 @@ class CsfServer {
         this.express.use(this.bodyParser.urlencoded({ extended: true }));
         this.express.use(this.bodyParser.json()); // To receive and parse json data. NOT USED.
 
-        this.initDatabase();
+        // this.initDatabase();
 
-        this.csfModels     = new this.CsfModels(this.Sequelize, this.sequelize);
-        this.csfServerAuth = new this.CsfServerAuth(this.csfModels);
+        // this.csfModels     = new this.CsfModels(this.Sequelize, this.sequelize);
+        // this.csfServerAuth = new this.CsfServerAuth(this.csfModels);
 
-        // Run test. This drops and populates the users table. Disable for produiction. =====
-        this.csfModels.runUnitTest(this.csfServerAuth);
+        // // Run test. This drops and populates the users table. Disable for produiction. =====
+        // this.csfModels.runUnitTest(this.csfServerAuth);
 
         // ----- Setup routes -----
         this.express.get('/getData', (request, response) => { 
