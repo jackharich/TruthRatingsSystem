@@ -23,7 +23,7 @@
             padding: 7px;
             display: inline-block;
             border: 1px solid gray;
-            height: calc(100vh - 120px);
+            height: calc(100vh - 125px);
             overflow-x: auto;
             background-color: ghostwhite;
         }
@@ -31,7 +31,8 @@
             width: 400px;
         }
         .logon-contents {
-            width: 700px;
+            /* width: 700px; */
+            width: calc(100vw - 490px);
             margin-left: 10px;
         }
         button {
@@ -101,8 +102,8 @@
             <div class="csf-logon-name">User full name</div>
             <div class="csf-logon-box">
                 <div class="csf-logon-box-title">Log On</div>
-                <input class="trs-input csf-logon-userid" placeholder="Email Address">
-                <input class="trs-input csf-logon-password" type="password" placeholder="Password">
+                <input class="csf-logon-userid" placeholder="Email Address">
+                <input class="csf-logon-password" type="password" placeholder="Password">
                 <div class="csf-logon-button-box">
                     <button onclick="clientAuth.logonForgot()" class="trs-button csf-logon-button csf-logon-forgot">Forgot Password</button>
                     <button onclick="clientAuth.logonCancel()" class="trs-button csf-logon-button csf-logon-cancel">Cancel</button>
