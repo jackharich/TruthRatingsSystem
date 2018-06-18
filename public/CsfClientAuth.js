@@ -1,8 +1,8 @@
 /* Contents 
-    class TrsServerAuth - Handles authentication and authorization on the client.
+    class CsfClientAuth - Handles authentication and authorization on the client.
         This includes managing the logon form and logon logoff buttons.
 */
-class TrsClientAuth {
+class CsfClientAuth {
     static get LOGGED_OFF_MODE() { return 'loggedOff'; } // Show only logon button.
     static get LOGGING_ON_MODE() { return 'loggingOn'; } // Show only logon form.
     static get LOGGED_ON_MODE()  { return 'loggedOn';  } // Show only logoff button.
@@ -17,13 +17,13 @@ class TrsClientAuth {
         this.isLoggedOn    = false; // True if token present.
 
         // Logon form.
-        this.logonBoxElement     = document.querySelector('.trs-logon-box');
-        this.logonButtonElement  = document.querySelector('.trs-logon-logon');
-        this.logoffButtonElement = document.querySelector('.trs-logon-logoff');
-        this.nameElement         = document.querySelector('.trs-logon-name');
+        this.logonBoxElement     = document.querySelector('.csf-logon-box');
+        this.logonButtonElement  = document.querySelector('.csf-logon-logon');
+        this.logoffButtonElement = document.querySelector('.csf-logon-logoff');
+        this.nameElement         = document.querySelector('.csf-logon-name');
 
-        this.userIdElement       = document.querySelector('.trs-logon-userid');
-        this.passwordElement     = document.querySelector('.trs-logon-password');
+        this.userIdElement       = document.querySelector('.csf-logon-userid');
+        this.passwordElement     = document.querySelector('.csf-logon-password');
 
         this.userIdElement.addEventListener(  'keydown', ()=>{ this.userIdPasswordKeydownEvent(event); } );
         this.passwordElement.addEventListener('keydown', ()=>{ this.userIdPasswordKeydownEvent(event); } );
@@ -34,23 +34,23 @@ class TrsClientAuth {
             // Check for token expiration. ==========================?
 
             // User is logged in.
-            this.changeToMode(TrsClientAuth.LOGGED_ON_MODE, state);
+            this.changeToMode(CsfClientAuth.LOGGED_ON_MODE, state);
         } else {
-            this.changeToMode(TrsClientAuth.LOGGED_OFF_MODE);
+            this.changeToMode(CsfClientAuth.LOGGED_OFF_MODE);
         }
     }
     // ----- Button events -----
     logon() {
-        this.changeToMode(TrsClientAuth.LOGGING_ON_MODE);
+        this.changeToMode(CsfClientAuth.LOGGING_ON_MODE);
     }
     logoff() {
-        this.changeToMode(TrsClientAuth.LOGGED_OFF_MODE);
+        this.changeToMode(CsfClientAuth.LOGGED_OFF_MODE);
     }
     logonForgot() {
         alert('This feature is not yet implemented.');
     }
     logonCancel() {
-        this.changeToMode(TrsClientAuth.LOGGED_OFF_MODE);
+        this.changeToMode(CsfClientAuth.LOGGED_OFF_MODE);
     }
     logonOkay() {
         let emailAddress = this.userIdElement.value.trim();
@@ -74,7 +74,7 @@ class TrsClientAuth {
                 newAuthState.isSystemAdmin   = mutationResult.isSystemAdmin;
                 newAuthState.token           = mutationResult.token;
 
-                this.changeToMode(TrsClientAuth.LOGGED_ON_MODE, newAuthState);
+                this.changeToMode(CsfClientAuth.LOGGED_ON_MODE, newAuthState);
                 this.saveAuthState();
                 //console.log('Token: ' + mutationResult.token);
 
@@ -88,7 +88,7 @@ class TrsClientAuth {
     changeToMode(newMode, newAuthState) {
         switch(newMode) {
 
-            case TrsClientAuth.LOGGED_OFF_MODE:
+            case CsfClientAuth.LOGGED_OFF_MODE:
                 this.logonBoxElement.style.display     = 'none';
                 this.logonButtonElement.style.display  = '';
                 this.logoffButtonElement.style.display = 'none';
@@ -99,7 +99,7 @@ class TrsClientAuth {
                 this.deleteAuthState();               
                 break;
 
-            case TrsClientAuth.LOGGING_ON_MODE:
+            case CsfClientAuth.LOGGING_ON_MODE:
                 this.logonBoxElement.style.display     = '';
                 this.logonButtonElement.style.display  = 'none';
                 this.logoffButtonElement.style.display = 'none';
@@ -110,7 +110,7 @@ class TrsClientAuth {
                 this.deleteAuthState();  
                 break;
 
-            case TrsClientAuth.LOGGED_ON_MODE:
+            case CsfClientAuth.LOGGED_ON_MODE:
                 this.logonBoxElement.style.display     = 'none';
                 this.logonButtonElement.style.display  = 'none';
                 this.logoffButtonElement.style.display = '';
@@ -128,13 +128,13 @@ class TrsClientAuth {
     }
     // ----- Token local storage -----
     deleteAuthState() {
-        window.localStorage.removeItem(TrsClientAuth.AUTH_KEY);
+        window.localStorage.removeItem(CsfClientAuth.AUTH_KEY);
     }
     saveAuthState() {
-        window.localStorage.setItem(TrsClientAuth.AUTH_KEY, JSON.stringify(this.authState));
+        window.localStorage.setItem(CsfClientAuth.AUTH_KEY, JSON.stringify(this.authState));
     }
     getAuthState() {
-        let state = window.localStorage.getItem(TrsClientAuth.AUTH_KEY);
+        let state = window.localStorage.getItem(CsfClientAuth.AUTH_KEY);
         if (state) {
             return JSON.parse(state);
         } else {

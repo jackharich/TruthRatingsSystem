@@ -4,9 +4,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>Test Client</title>
 
-    <script src="TrsTestClient.js"></script>
-    <script src="TrsRequestor.js"></script>
-    <script src="TrsClientAuth.js"></script>
+    <script src="CsfTestClient.js"></script>
+    <script src="CsfRequestor.js"></script>
+    <script src="CsfClientAuth.js"></script>
 
     <style type="text/css">
         body {
@@ -38,7 +38,7 @@
             margin-right: 20px;
         }
         /* ---------- Logon Page from TrsMain.css ---------- */
-        .trs-logon-box {
+        .csf-logon-box {
             width: 550px;
             margin: 100px auto 0 auto; /* Unable to easily center vertically. */
             border: solid 4px #3f88d0;;
@@ -46,33 +46,33 @@
             background-color: GhostWhite;
             box-shadow: #acacac 2px 3px 10px; /* h-offset, v-offset, blur, no spread */
         }
-        .trs-logon-box-title {
+        .csf-logon-box-title {
             font-family: Verdana, Helvetica, Arial, sans-serif;
             font-size: 24px;
             font-weight: bold;
             text-align: center;
         }
-        .trs-logon-box-title, .trs-logon-userid, .trs-logon-password {
+        .csf-logon-box-title, .csf-logon-userid, .csf-logon-password {
             margin: 20px auto 20px auto;
         }
-        .trs-logon-userid, .trs-logon-password {
+        .csf-logon-userid, .csf-logon-password {
             display: block;
             width: 300px;
             font-size: 15px;
         }
-        .trs-logon-button-box {
+        .csf-logon-button-box {
             text-align: center;
         }
-        .trs-logon-button {
+        .csf-logon-button {
             margin: 20px 10px;
             font-size: 15px;
         }
-        .trs-logon-name {
+        .csf-logon-name {
             display: inline-block;
             font-family: Verdana, Helvetica, Arial, sans-serif;
             font-size: 14px;
         }
-        .trs-logon-note {
+        .csf-logon-note {
             margin: 10px 20px 20px 20px;
             padding: 10px;
             font-family: Verdana, Helvetica, Arial, sans-serif;
@@ -96,22 +96,22 @@
     <div>
         <div class="result-contents"></div>
         <div class="logon-contents">
-            <button onclick="clientAuth.logon()"  class="trs-button trs-logon-button trs-logon-logon">Log On</button>
-            <button onclick="clientAuth.logoff()" class="trs-button trs-logon-button trs-logon-logoff">Log Off</button>
-            <div class="trs-logon-name">User full name</div>
-            <div class="trs-logon-box">
-                <div class="trs-logon-box-title">Log On</div>
-                <input class="trs-input trs-logon-userid" placeholder="Email Address">
-                <input class="trs-input trs-logon-password" type="password" placeholder="Password">
-                <div class="trs-logon-button-box">
-                    <button onclick="clientAuth.logonForgot()" class="trs-button trs-logon-button trs-logon-forgot">Forgot Password</button>
-                    <button onclick="clientAuth.logonCancel()" class="trs-button trs-logon-button trs-logon-cancel">Cancel</button>
-                    <button onclick="clientAuth.logonOkay()"   class="trs-button trs-logon-button trs-logon-okay">Okay</button>
+            <button onclick="clientAuth.logon()"  class="trs-button csf-logon-button csf-logon-logon">Log On</button>
+            <button onclick="clientAuth.logoff()" class="trs-button csf-logon-button csf-logon-logoff">Log Off</button>
+            <div class="csf-logon-name">User full name</div>
+            <div class="csf-logon-box">
+                <div class="csf-logon-box-title">Log On</div>
+                <input class="trs-input csf-logon-userid" placeholder="Email Address">
+                <input class="trs-input csf-logon-password" type="password" placeholder="Password">
+                <div class="csf-logon-button-box">
+                    <button onclick="clientAuth.logonForgot()" class="trs-button csf-logon-button csf-logon-forgot">Forgot Password</button>
+                    <button onclick="clientAuth.logonCancel()" class="trs-button csf-logon-button csf-logon-cancel">Cancel</button>
+                    <button onclick="clientAuth.logonOkay()"   class="trs-button csf-logon-button csf-logon-okay">Okay</button>
                 </div>
-                <div class="trs-logon-note">Note - Your email address and password will be encrypted and saved on this computer for 10 days or until you logoff. If this is not your own computer, we suggest you logoff when done.</div>
+                <div class="csf-logon-note">Note - Your email address and password will be encrypted and saved on this computer for 10 days or until you logoff. If this is not your own computer, we suggest you logoff when done.</div>
             </div>
         </div>
     </div>
-    <script>TrsTestClient.init()</script>
+    <script>CsfTestClient.init()</script>
 </body>
 </html> 

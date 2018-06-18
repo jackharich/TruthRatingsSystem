@@ -2,13 +2,13 @@
 let clientAuth;
 let testClient;
 
-class TrsTestClient {
+class CsfTestClient {
     static init() {
-        testClient = new TrsTestClient();
+        testClient = new CsfTestClient();
     }
     constructor() {
-        this.requestor      = new TrsRequestor();
-        clientAuth          = new TrsClientAuth(this.requestor);
+        this.requestor      = new CsfRequestor();
+        clientAuth          = new CsfClientAuth(this.requestor);
         this.resultContents = document.querySelector('.result-contents');
     }
     // ----- Data persistance test methods.
@@ -16,7 +16,7 @@ class TrsTestClient {
         this.resultContents.innerHTML = '';
     }
     getUser() {
-        this.requestor.getOneRecord(TrsRequestor.USERS_TABLE, 2, (record) => { 
+        this.requestor.getOneRecord(CsfRequestor.USERS_TABLE, 2, (record) => { 
             if (record) {
                 this.updateResults('Got ' + record.id + ' ' + record.fullName);
             } else {
@@ -25,7 +25,7 @@ class TrsTestClient {
         });
     } 
     getAllUsers() {
-        this.requestor.getAllRecords(TrsRequestor.USERS_TABLE, (records) => { 
+        this.requestor.getAllRecords(CsfRequestor.USERS_TABLE, (records) => { 
             if (records) {
                 this.updateResults('--- getAllRecords');
                 for (let record of records) {
@@ -37,7 +37,7 @@ class TrsTestClient {
         });
     }
     getAllUsersWhere() {
-        this.requestor.getAllRecordsWhere(TrsRequestor.USERS_TABLE, { orgId: 2 }, (records) => { 
+        this.requestor.getAllRecordsWhere(CsfRequestor.USERS_TABLE, { orgId: 2 }, (records) => { 
             if (records) {
                 this.updateResults('--- getAllRecordsWhere orgId = 2');
                 for (let record of records) {
@@ -57,7 +57,7 @@ class TrsTestClient {
         newRecordValues.isSystemAdmin = false;
         newRecordValues.orgId         = 2;
 
-        this.requestor.addRecord(TrsRequestor.USERS_TABLE, newRecordValues, (mutationResult) => { 
+        this.requestor.addRecord(CsfRequestor.USERS_TABLE, newRecordValues, (mutationResult) => { 
             if (mutationResult.success) {
                 this.updateResults('Added id=' + mutationResult.id);
             } else {
@@ -71,7 +71,7 @@ class TrsTestClient {
         updateValues.fullName      = 'CHANGED NAME';
         updateValues.isOrgAdmin    = true;
 
-        this.requestor.updateRecord(TrsRequestor.USERS_TABLE, 5, updateValues, (mutationResult) => { 
+        this.requestor.updateRecord(CsfRequestor.USERS_TABLE, 5, updateValues, (mutationResult) => { 
             if (mutationResult.success) {
                 this.updateResults('Update id=5 succeeded');
             } else {
@@ -80,7 +80,7 @@ class TrsTestClient {
         });
     }
     deleteUser() {
-        this.requestor.deleteRecord(TrsRequestor.USERS_TABLE, 5, (mutationResult) => { 
+        this.requestor.deleteRecord(CsfRequestor.USERS_TABLE, 5, (mutationResult) => { 
             if (mutationResult.success) {
                 this.updateResults('Delete id=5 succeeded');
             } else {

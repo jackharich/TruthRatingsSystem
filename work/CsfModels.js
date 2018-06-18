@@ -1,10 +1,10 @@
 /* Contents:
-    class TrsModels - Manages the database tables, aka models.
-    class TrsModel  - The superclass for other models.
-    class TrsModelUsers - Subclass for users table.
+    class CsfModels - Manages the database tables, aka models.
+    class CsfModel  - The superclass for other models.
+    class CsfModelUsers - Subclass for users table.
     Note - I was unable to put subclasses in separate files. Couldn't get export/require to work.
 */
-class TrsModels {
+class CsfModels {
     static get USERS_TABLE()     { return 'users'; }
 
     constructor(Sequelize, sequelize) {
@@ -12,7 +12,7 @@ class TrsModels {
         this.sequelize = sequelize;
         this.models = new Map(); // Key is table name, value is TrsModel instance.
         // Add tables.
-        let users = new TrsModelUsers(Sequelize, sequelize);
+        let users = new CsfModelUsers(Sequelize, sequelize);
         this.models.set(users.name, users);
     } 
     getModel(name) {
@@ -24,18 +24,18 @@ class TrsModels {
             return undefined;
         }
     }
-    logHashedPassword(trsServerAuth, password) {
-        console.log('Hash for ' + password + ' = ' + trsServerAuth.createHashedPassword(password));
+    logHashedPassword(csfServerAuth, password) {
+        console.log('Hash for ' + password + ' = ' + csfServerAuth.createHashedPassword(password));
     }
-    runUnitTest(trsServerAuth) {
+    runUnitTest(csfServerAuth) {
         // Create hashed pwd. 
-        // this.logHashedPassword(trsServerAuth, 'thriftyH87');
-        // this.logHashedPassword(trsServerAuth, 'truthfulNow34');
-        // this.logHashedPassword(trsServerAuth, 'jackoSustain56');
-        // this.logHashedPassword(trsServerAuth, 'scottieCandle98');
-        // this.logHashedPassword(trsServerAuth, 'research7865');
+        // this.logHashedPassword(csfServerAuth, 'thriftyH87');
+        // this.logHashedPassword(csfServerAuth, 'truthfulNow34');
+        // this.logHashedPassword(csfServerAuth, 'jackoSustain56');
+        // this.logHashedPassword(csfServerAuth, 'scottieCandle98');
+        // this.logHashedPassword(csfServerAuth, 'research7865');
 
-        let usersTable = this.getModel(TrsModels.USERS_TABLE).table;
+        let usersTable = this.getModel(CsfModels.USERS_TABLE).table;
 
         // force: true will drop the table if it already exists. <-----<<< A critical flag. =============
         usersTable.sync({force: true}).then(() => {
@@ -79,7 +79,7 @@ class TrsModels {
         });
     }
     getTestData(usersTable) { 
-        let usersModel = this.getModel(TrsModels.USERS_TABLE);
+        let usersModel = this.getModel(CsfModels.USERS_TABLE);
         // Test addRecord().
         let record = {};
         record.fullName = 'Montserrat Kollofon';
@@ -114,9 +114,9 @@ class TrsModels {
             console.log('6---> updateRecord success = ' + success);
         });
     }
-} // End class TrsModels
+} // End class CsfModels
 
-class TrsModel { // The superclass for other models. ALL public methods are async so they return promises.
+class CsfModel { // The superclass for other models. ALL public methods are async so they return promises.
     constructor(Sequelize, sequelize) {
         this.Sequelize = Sequelize;
         this.sequelize = sequelize;
@@ -138,7 +138,7 @@ class TrsModel { // The superclass for other models. ALL public methods are asyn
         await this.table.findAll(options).then(records => {
             if (records) {
                 result = this.convertSequelizeResultToArrayOfRecordObjects(records);
-                if (this.name === TrsModels.USERS_TABLE && ! preservePassword) { // If users table remove password.
+                if (this.name === CsfModels.USERS_TABLE && ! preservePassword) { // If users table remove password.
                     for (let record of result) { record.password = undefined; }
                 }
             }
@@ -151,7 +151,7 @@ class TrsModel { // The superclass for other models. ALL public methods are asyn
         await this.table.findById(id).then(record => {
             if (record) {
                 result = record.dataValues; // A JSON object.
-                if (this.name === TrsModels.USERS_TABLE) result.password = undefined; // If users table remove password.
+                if (this.name === CsfModels.USERS_TABLE) result.password = undefined; // If users table remove password.
             }
         }); 
         return result;
@@ -181,12 +181,12 @@ class TrsModel { // The superclass for other models. ALL public methods are asyn
         }
         return records;
     }
-} // End class TrsModel
+} // End class CsfModel
 
-class TrsModelUsers extends TrsModel {
+class CsfModelUsers extends CsfModel {
     constructor(Sequelize, sequelize) {
         super(Sequelize, sequelize);
-        this.name = TrsModels.USERS_TABLE;
+        this.name = CsfModels.USERS_TABLE;
         this.table = this.sequelize.define(this.name, { 
             fullName:      { type: this.Sequelize.STRING, allowNull: false },
             password:      { type: this.Sequelize.STRING, allowNull: false },
@@ -219,6 +219,6 @@ class TrsModelUsers extends TrsModel {
         });
         return id;
     }
-} // End class TrsModelUsers
+} // End class CsfModelUsers
 
-module.exports = TrsModels;
+module.exports = CsfModels;

@@ -1,12 +1,12 @@
 /* Contents 
-    class TrsServerAuth - Handles authentication and authorization on the server. Concepts from:
+    class CsfServerAuth - Handles authentication and authorization on the server. Concepts from:
     https://medium.freecodecamp.org/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52
     "Authentication is the act of logging a user in. Authorization is the act of verifying 
     the access rights of a user to interact with a resource."
  */
-class TrsServerAuth {
+class CsfServerAuth {
     constructor(models) {
-        this.Models = require('./TrsModels');
+        this.Models = require('./CsfModels');
         this.models = models;
         this.jwt    = require('jsonwebtoken');
         this.bcrypt = require('bcryptjs');
@@ -77,6 +77,6 @@ class TrsServerAuth {
         });
         return;
     }
-} // End class TrsServerAuth
+} // End class CsfServerAuth
 
-module.exports = TrsServerAuth;
+module.exports = CsfServerAuth;

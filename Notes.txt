@@ -1,5 +1,5 @@
 Bug: 
-"start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT ./work/TrsServer.js",
+"start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT ./work/CsfServer.js",
 
 Done. First get publish git branch working. Figure out how to add remote repository.
 Still forced to enter username and pwd for every publish. Next step is Azure.

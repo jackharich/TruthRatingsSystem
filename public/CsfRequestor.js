@@ -1,7 +1,7 @@
 /* Contents:
-    class TrsRequestor - Handles client http requests.
+    class CsfRequestor - Handles client http requests.
 */
-class TrsRequestor {
+class CsfRequestor {
     static get USERS_TABLE()     { return 'users'; }
 
     constructor() {

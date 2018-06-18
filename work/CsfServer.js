@@ -1,5 +1,5 @@
 // Entry point for the trs server, ie the entire back end. 
-class TrsServer {
+class CsfServer {
     constructor() {
         // Node packages.
         this.bodyParser  = require('body-parser');
@@ -12,39 +12,23 @@ class TrsServer {
         this.sequelize;
 
         // Our own packages.
-        this.TrsModels   = require('./TrsModels'); // Path is relative to this file.
-        this.trsModels;
+        this.CsfModels   = require('./CsfModels'); // Path is relative to this file.
+        this.csfModels;
 
-        this.TrsServerAuth  = require('./TrsServerAuth');
-        this.trsServerAuth;
-    }
-    xxxinit() {
-        const http = require('http');
-        let hostname = '127.0.0.1';
-        const port = 3000;
-
-        hostname = 'https://truth-rating-system.azurewebsites.net';
-
-        const server = http.createServer((req, res) => {
-            res.statusCode = 200;
-            res.setHeader('Content-Type', 'text/plain');
-            res.end('Hello World\n');
-        });
-        server.listen(port, hostname, () => { // Error =================
-            console.log(`Server running at http://${hostname}:${port}/`);
-        });
+        this.CsfServerAuth  = require('./CsfServerAuth');
+        this.csfServerAuth;
     }
     init() {
         this.express.use(this.bodyParser.urlencoded({ extended: true }));
         this.express.use(this.bodyParser.json()); // To receive and parse json data. NOT USED.
 
-        // this.initDatabase();
+        this.initDatabase();
 
-        // this.trsModels     = new this.TrsModels(this.Sequelize, this.sequelize);
-        // this.trsServerAuth = new this.TrsServerAuth(this.trsModels);
+        this.csfModels     = new this.CsfModels(this.Sequelize, this.sequelize);
+        this.csfServerAuth = new this.CsfServerAuth(this.csfModels);
 
-        // // Run test. This drops and populates the users table. Disable for produiction. =====
-        // this.trsModels.runUnitTest(this.trsServerAuth);
+        // Run test. This drops and populates the users table. Disable for produiction. =====
+        this.csfModels.runUnitTest(this.csfServerAuth);
 
         // ----- Setup routes -----
         this.express.get('/getData', (request, response) => { 
@@ -68,7 +52,7 @@ class TrsServer {
                 this.processAuthorizeLogon(request, response).then( ()=> { response.end(); });
                 return;
             }
-            this.trsServerAuth.validateToken(request).then( ()=> { 
+            this.csfServerAuth.validateToken(request).then( ()=> { 
                 // validateToken sets request.app, a pretty handy bundle of data.
                 if (request.app.isError) {
                     this.invalidAuthorization(response, request.app.error);
@@ -76,7 +60,7 @@ class TrsServer {
                 };
                 // Must be orgAdmin or systemAdmin to mutate users table. Later more tables. ============
                 let tableName = request.body.table;
-                if (tableName === this.TrsModels.USERS_TABLE && ! (request.app.isOrgAdmin || request.app.isSystemAdmin)) {
+                if (tableName === this.CsfModels.USERS_TABLE && ! (request.app.isOrgAdmin || request.app.isSystemAdmin)) {
                     this.invalidAuthorization(response, 'Must be an administrator to edit the users table.');
                     return;
                 }
@@ -129,7 +113,7 @@ class TrsServer {
         let tableName = request.query.table;
         let id = parseInt(request.query.id);
         //console.log('processGetRequest tableName = ' + tableName + ', id = ' + id);
-        let model = this.trsModels.getModel(tableName);
+        let model = this.csfModels.getModel(tableName);
         // Get the requested record.
         let result;
         await model.getRecord(id).then(record => {
@@ -142,7 +126,7 @@ class TrsServer {
     async processGetAllRecords(request, response) {
         let tableName = request.query.table;
         //console.log('processGetAllRecords tableName = ' + tableName);
-        let model = this.trsModels.getModel(tableName);
+        let model = this.csfModels.getModel(tableName);
         // Get the requested record.
         let result;
         await model.getAllRecords(request.query.whereFilter).then(records => {
@@ -156,7 +140,7 @@ class TrsServer {
     async processAddRecord(request, response) {
         let tableName = request.body.table;
         //console.log('processAddRecord tableName = ' + tableName);
-        let model = this.trsModels.getModel(tableName);
+        let model = this.csfModels.getModel(tableName);
         // Get the requested record.
         let mutationResult;
         let providedRecord = request.body.newRecordValues; 
@@ -177,7 +161,7 @@ class TrsServer {
     async processUpdateRecord(request, response) {
         let tableName = request.body.table;
         //console.log('processUpdateRecord tableName = ' + tableName);
-        let model = this.trsModels.getModel(tableName);
+        let model = this.csfModels.getModel(tableName);
         let mutationResult;
         let options = request.body; 
 
@@ -198,7 +182,7 @@ class TrsServer {
     }
     async processDeleteRecord(request, response) {
         let tableName = request.body.table;
-        let model = this.trsModels.getModel(tableName);
+        let model = this.csfModels.getModel(tableName);
         let mutationResult;
 
         await model.deleteRecord(request.body.id)
@@ -221,7 +205,7 @@ class TrsServer {
         
         // Get the user record. The emailAddress is unique.
         let whereFilter = JSON.stringify({ emailAddress: suppliedEmailAddress });
-        let model       = this.trsModels.getModel(this.TrsModels.USERS_TABLE);
+        let model       = this.csfModels.getModel(this.CsfModels.USERS_TABLE);
         let result      = {};
 
         await model.getAllRecords(whereFilter, true).then(records => { // true for preservePassword.
@@ -233,14 +217,14 @@ class TrsServer {
                 let hashedPassword = record.password;
 
                 // Validate supplied against stored hashed password.
-                if (this.trsServerAuth.isCorrectPassword(suppliedPassword, hashedPassword)) {
+                if (this.csfServerAuth.isCorrectPassword(suppliedPassword, hashedPassword)) {
                     // Valid logon.
                     result.success       = true;
                     result.fullName      = record.fullName;
                     result.isOrgAdmin    = record.isOrgAdmin;
                     result.isSystemAdmin = record.isSystemAdmin;
                     // The client should send the token in all mutate requests if user is logged on.
-                    let token = this.trsServerAuth.createToken(record.id);
+                    let token = this.csfServerAuth.createToken(record.id);
                     result.token = token;
 
                 } else {
@@ -311,8 +295,8 @@ class TrsServer {
         return text;
     }
 }
-module.exports = TrsServer;
+module.exports = CsfServer;
 
 // These must be after the class is defined and exported.
-const trsServer = new TrsServer();
+const trsServer = new CsfServer();
 trsServer.init();
