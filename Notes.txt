@@ -1,15 +1,8 @@
-Bug: 
-"start_azure_debug": "node --inspect=0.0.0.0:$APPSVC_TUNNEL_PORT ./work/CsfServer.js",
-
-Done. First get publish git branch working. Figure out how to add remote repository.
-Still forced to enter username and pwd for every publish. Next step is Azure.
-
-Deployment: Try Azure. Setup account, install Azure App Service, do tutorial at:
-https://code.visualstudio.com/tutorials/app-service-extension/getting-started
-
-Next: Very troublesome, tedious, buggy Azure and all the rest.
-Use different database configurations for production and dev. What about staging? Is this possible?
-Take plenty of time to get this step right. 
+How to get app running on host
+- AWS looks better that WebFaction, Azure, Heroku, Google Cloud.
+- Failed to get my app deployed.
+- Start over completely, create new environment, follow their exact doc.
+Take notes as I go about every step, so I can reproduce success or describe failure.
 
 
 
